@@ -23,6 +23,7 @@
             <JupyterConnectionParameters>
               <option name="managed" value="true" />
               <option name="sdkHomePath" value="C:\Users\Bryan\anaconda3\envs\hanlp\python.exe" />
+              <option name="sdkName" value="hanlp" />
             </JupyterConnectionParameters>
           </value>
         </entry>
