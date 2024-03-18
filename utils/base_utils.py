@@ -1,10 +1,9 @@
-import os
 import openpyxl
 import re
-import pandas as pd
-from openpyxl.utils import get_column_letter
-from pathlib import Path
+import bs4
+
 from bs4 import BeautifulSoup
+from openpyxl.utils import get_column_letter
 
 
 def remove_prefix(id_string):
@@ -28,6 +27,24 @@ def get_file_extension(filename):
 def generate_url(_item_id):
     # https://www.capcut.com/view/7342830990957478402?workspaceId=7293489460916830210&from=workspace
     return f'https://www.capcut.com/view/{_item_id}?workspaceId=7293489460916830210&from=workspace'
+
+
+def extract_data_2(_soup):
+    _data = []
+    dataDiv = _soup.select('div[class*="DataViewGroupBody"]')
+    for div in dataDiv:
+        if div.children:
+            for child in div.children:
+                if isinstance(child, bs4.element.Tag):
+                    # 获取 data-selectable-item-id 的值
+                    item_id = child.get('data-selectable-item-id')
+                    des = child.select('.lv-typography')
+                    description = des[0].text if des else ''
+                    if item_id is not None:  # 如果 data-selectable-item-id 的值存在
+                        print(item_id)
+                        print(description)
+                        _data.append([item_id, description, generate_url(item_id)])
+    return _data
 
 
 def extract_data(_soup):
@@ -70,9 +87,3 @@ def columns_best_fit(ws: openpyxl.worksheet.worksheet.Worksheet) -> None:
                 pass
         adjusted_width = (max_length + 2)
         ws.column_dimensions[get_column_letter(column)].width = adjusted_width
-
-
-
-
-
-

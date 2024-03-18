@@ -14,7 +14,7 @@ class FileParser:
         self.local_resource_path = local_resource_path
         self.output_file_path = output_file_path
         self.soup = utils.parse_html(html_path)
-        self.data = utils.extract_data(self.soup)
+        self.data = utils.extract_data_2(self.soup)
 
         self.df_raw = pd.DataFrame(self.data, columns=['ID', 'Description'])
         self.df_raw.loc[:, 'URL'] = self.df_raw['ID'].apply(utils.generate_url)
