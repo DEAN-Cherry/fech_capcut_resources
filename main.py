@@ -24,7 +24,7 @@ if __name__ == '__main__':
     else:
         print('Using default Workspace ID: 7293489460916830210')
 
-    fp = FileParser(args.html_path, args.local_resource_path, args.output_file_path)
+    fp = FileParser(args.html_path, args.local_resource_path, args.output_file_path, args.worksapce_id)
     fp.run()
     print('Done')
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
