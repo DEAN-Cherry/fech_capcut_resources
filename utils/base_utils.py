@@ -24,9 +24,9 @@ def get_file_extension(filename):
         return None
 
 
-def generate_url(_item_id):
+def generate_url(_item_id, _workspace_id):
     # https://www.capcut.com/view/7342830990957478402?workspaceId=7293489460916830210&from=workspace
-    return f'https://www.capcut.com/view/{_item_id}?workspaceId=7293489460916830210&from=workspace'
+    return f'https://www.capcut.com/view/{_item_id}?workspaceId={_workspace_id}&from=workspace'
 
 
 def extract_data_2(_soup):
@@ -41,9 +41,7 @@ def extract_data_2(_soup):
                     des = child.select('.lv-typography')
                     description = des[0].text if des else ''
                     if item_id is not None:  # 如果 data-selectable-item-id 的值存在
-                        print(item_id)
-                        print(description)
-                        _data.append([item_id, description, generate_url(item_id)])
+                        _data.append([item_id, description])
     return _data
 
 

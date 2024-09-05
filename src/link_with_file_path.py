@@ -9,15 +9,17 @@ from pathlib import Path
 
 
 class FileParser:
-    def __init__(self, html_path: str, local_resource_path: str, output_file_path: str = None):
+    def __init__(self, html_path: str, local_resource_path: str, output_file_path: str = None, workspace_id: str ='7293489460916830210'):
         self.html_path = html_path
         self.local_resource_path = local_resource_path
         self.output_file_path = output_file_path
+        self.workspace_id = workspace_id
+
         self.soup = utils.parse_html(html_path)
         self.data = utils.extract_data_2(self.soup)
 
         self.df_raw = pd.DataFrame(self.data, columns=['ID', 'Description'])
-        self.df_raw.loc[:, 'URL'] = self.df_raw['ID'].apply(utils.generate_url)
+        self.df_raw.loc[:, 'URL'] = self.df_raw['ID'].apply(utils.generate_url, _workspace_id=workspace_id)
 
         self.df_invalid = pd.DataFrame(utils.filter_data(self.data), columns=['ID', 'Description'])
         self.df_name_url = self.df_raw[['Description', 'URL']]
